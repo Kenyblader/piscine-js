@@ -8,4 +8,4 @@ const isPalindrome = (str) => {
 }
 
 console.log(isPalindrome("radar")); // true
-console.log(isPalindrome("hello")); // false
+console.log(isPalindrome("hello")); // false    
