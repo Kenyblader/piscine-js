@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>207.4 Notifications</title>
+</head>
+<body>
+  <button id="perm">Demander permission</button>
+  <button id="one">Notifier (1)</button>
+  <button id="many">Notifier (queue)</button>
+
+  <script src="Exercice207.4.js"></script>
+  <script>
+    const manager = new NotificationManager();
+    const queue = new NotificationQueue(manager, 1500);
+
+    document.getElementById("perm").addEventListener("click", async () => {
+      try {
+        const p = await manager.requestPermission();
+        console.log("Permission:", p);
+      } catch (e) {
+        console.error(e.message);
+      }
+    });
+
+    document.getElementById("one").addEventListener("click", async () => {
+      try {
+        await manager.show("Hello 👋", {
+          body: "Une notification simple",
+          icon: "https://via.placeholder.com/64",
+          autoClose: 3000,
+          onClick: () => console.log("Notification cliquée"),
+          onClose: () => console.log("Notification fermée"),
+          onError: () => console.log("Erreur notification")
+        });
+      } catch (e) {
+        console.error(e.message);
+      }
+    });
+
+    document.getElementById("many").addEventListener("click", () => {
+      queue.add("Notif 1", { body: "Première", autoClose: 2000 });
+      queue.add("Notif 2", { body: "Deuxième", autoClose: 2000 });
+      queue.add("Notif 3", { body: "Troisième", autoClose: 2000 });
+    });
+  </script>
+</body>
+</html>
