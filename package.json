@@ -1,0 +1,15 @@
+{
+  "name": "piscine_js",
+  "version": "1.0.0",
+  "description": "ensemples de solutions piscine js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "y"
+  },
+  "author": "keny blader",
+  "license": "ISC"
+}
