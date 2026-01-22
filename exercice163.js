@@ -61,7 +61,7 @@ function wait(ms) {
 }
 
 
-fetchWithRetry('https://jsonplaceholder.typicode.com/posts/1')
+fetchWithRetry('https://jsonplaceholder.typicode.com/users')
   .then(data => {
     console.log('Données reçues :', data);
   })
