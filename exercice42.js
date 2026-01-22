@@ -11,7 +11,7 @@ const game = async () => {
         let attempts = 0;
         let guessedCorrectly = false;
         while (!guessedCorrectly) {
-            const guess = attempts++;
+            const guess = attempts++
             console.log(`You guessed: ${guess}`);
             if (guess === targetNumber) {
                 guessedCorrectly = true;
