@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <title>Exercice 207.3</title>
+</head>
+<body>
+  <button id="btnCurrent">Position actuelle</button>
+  <button id="btnWatch">Démarrer suivi</button>
+  <button id="btnStop">Stop suivi</button>
+  <button id="btnNear">Trouver lieux proches</button>
+
+  <pre id="out"></pre>
+
+  <script src="Exercice207.3.js"></script>
+  <script>
+    const out = document.getElementById("out");
+    const geo = new GeoLocation();
+    const finder = new ProximityFinder(geo);
+
+    const places = [
+      { name: "Lieu A", latitude: 48.8566, longitude: 2.3522 }, // Paris
+      { name: "Lieu B", latitude: 48.8584, longitude: 2.2945 }, // Tour Eiffel
+      { name: "Lieu C", latitude: 50.8503, longitude: 4.3517 }  // Bruxelles
+    ];
+
+    document.getElementById("btnCurrent").addEventListener("click", async () => {
+      try {
+        const pos = await geo.getCurrentPosition({ enableHighAccuracy: true, timeout: 10000 });
+        out.textContent = "📍 Position actuelle:\n" + JSON.stringify(pos, null, 2);
+      } catch (e) {
+        out.textContent = "❌ " + e.message;
+      }
+    });
+
+    document.getElementById("btnWatch").addEventListener("click", () => {
+      geo.watchPosition(
+        (pos) => {
+          out.textContent = "🛰 Suivi position:\n" + JSON.stringify(pos, null, 2);
+        },
+        (err) => {
+          out.textContent = "❌ " + err.message;
+        },
+        { enableHighAccuracy: true, maximumAge: 1000, timeout: 10000 }
+      );
+    });
+
+    document.getElementById("btnStop").addEventListener("click", () => {
+      geo.clearWatch();
+      out.textContent = "⏹ Suivi arrêté.";
+    });
+
+    document.getElementById("btnNear").addEventListener("click", async () => {
+      try {
+        const { me, nearby } = await finder.findNearby(places, 5); // 5 km
+        out.textContent =
+          "🙋 Moi:\n" + JSON.stringify(me, null, 2) +
+          "\n\n📌 Lieux proches (<= 5 km):\n" + JSON.stringify(nearby, null, 2);
+      } catch (e) {
+        out.textContent = "❌ " + e.message;
+      }
+    });
+  </script>
+</body>
+</html>
