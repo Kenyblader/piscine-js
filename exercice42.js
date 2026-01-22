@@ -8,13 +8,10 @@ const game = async () => {
     console.log("Welcome to the Number Guessing Game!");
     
         const targetNumber = getNumber();
-        console.log(`The number to guess is: ${targetNumber}`);
-        let attempts = 1;
+        let attempts = 0;
         let guessedCorrectly = false;
         while (!guessedCorrectly) {
-            const guess = await readline("Guess a number between 1 and 100: ");
-
-            attempts++;
+            const guess = attempts++;
             console.log(`You guessed: ${guess}`);
             if (guess === targetNumber) {
                 guessedCorrectly = true;
